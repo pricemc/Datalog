@@ -36,11 +36,11 @@ bool Parser::datalogProgram(std::deque<Token*>& tokens)
 	{
 		return (COLON(tokens) && scheme(tokens) && schemeList(tokens));
 	}
-	else if (FACTS(tokens))
+	if (FACTS(tokens))
 		return (COLON(tokens) && factList(tokens));
-	else if (RULES(tokens))
+	if (RULES(tokens))
 		return (COLON(tokens) && ruleList(tokens));
-	else if (QUERIES(tokens))
+	if (QUERIES(tokens))
 		return (COLON(tokens) && query(tokens) && queryList(tokens));
 	return false;
 }
