@@ -1,0 +1,12 @@
+:-,,.?.
+s::-
+x:-
+()
+Schemes
+Facts
+Rules
+Queries
+*+
+#this is a comment
+#|block comment
+tt|#
