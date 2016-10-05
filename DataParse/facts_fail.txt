@@ -1,0 +1,5 @@
+Facts:
+  snap('12345','C. Brown','12 Apple','555-1234').
+  snap('33333','Snoopy','12 Apple','555-1234').
+  snap('12345','C. Brown','12 Apple','555-1234').
+  snap('33333','Snoopy','12 Apple','555-1234.).
