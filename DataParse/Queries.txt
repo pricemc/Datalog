@@ -1,0 +1,4 @@
+Queries:
+  HasSameAddress('Snoopy',Who)?
+  WhatDoesThisMean('why',what)?
+  whyWouldIdoThis(this,who)?
