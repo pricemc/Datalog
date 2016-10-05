@@ -68,7 +68,7 @@ bool Parser::scheme(std::deque<Token*>& tokens)
 bool Parser::schemeList(std::deque<Token*>& tokens)
 {
 	if (tokens.front()->getName() == "ID")
-		return (scheme(tokens));
+		return (scheme(tokens) && schemeList(tokens));
 	else if (mEOF(tokens) || restart(tokens))
 		return true;
 	return false;
