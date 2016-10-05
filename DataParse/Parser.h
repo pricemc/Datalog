@@ -30,6 +30,11 @@ private:
 	bool queryList(std::deque<Token*>& tokens);
 	bool stringList(std::deque<Token*>& tokens);
 
+	bool datalogSchemes(std::deque<Token*>& tokens);
+	bool datalogRules(std::deque<Token*>& tokens);
+	bool datalogFacts(std::deque<Token*>& tokens);
+	bool datalogQueries(std::deque<Token*>& tokens);
+
 	bool COMMA(std::deque<Token*>& tokens);
 	bool PERIOD(std::deque<Token*>& tokens);
 	bool Q_MARK(std::deque<Token*>& tokens);

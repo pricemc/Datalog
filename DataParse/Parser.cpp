@@ -33,17 +33,32 @@ bool Parser::parse(std::deque<Token*>& tokens)
 bool Parser::datalogProgram(std::deque<Token*>& tokens)
 {
 	if (SCHEMES(tokens))
-	{
-		return (COLON(tokens) && scheme(tokens) && schemeList(tokens));
-	}
+		return datalogSchemes(tokens);
 	if (FACTS(tokens))
-		return (COLON(tokens) && factList(tokens));
+		return datalogFacts(tokens);
 	if (RULES(tokens))
-		return (COLON(tokens) && ruleList(tokens));
+		return datalogRules(tokens);
 	if (QUERIES(tokens))
-		return (COLON(tokens) && query(tokens) && queryList(tokens));
+		return datalogQueries(tokens);
 	return false;
 }
+bool Parser::datalogSchemes(std::deque<Token*>& tokens)
+{
+	return (COLON(tokens) && scheme(tokens) && schemeList(tokens));
+}
+bool Parser::datalogFacts(std::deque<Token*>& tokens)
+{
+	return (COLON(tokens) && factList(tokens));
+}
+bool Parser::datalogRules(std::deque<Token*>& tokens)
+{
+	return (COLON(tokens) && ruleList(tokens));
+}
+bool Parser::datalogQueries(std::deque<Token*>& tokens)
+{
+	return (COLON(tokens) && query(tokens) && queryList(tokens));
+}
+
 bool Parser::scheme(std::deque<Token*>& tokens)
 {
 	if (ID(tokens))
