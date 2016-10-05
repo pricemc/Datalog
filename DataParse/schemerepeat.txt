@@ -1,4 +1,6 @@
 Schemes:
   snap(S,N,A,P)
   look(T,X,Z)
+  snap(S,N,A,P)
+  look(T,X,Z)
   why(x,y)
