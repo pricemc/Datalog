@@ -176,7 +176,7 @@ fi
 if [ $zipForSubmission -eq 1 ]
 then
 	echo "ZIPPING TO: $zipName"
-	zip "$zipName" *.h *.cpp *.txt
+	zip "$zipName" *.h *.cpp *.txt run.sh
 	exit
 fi
 
