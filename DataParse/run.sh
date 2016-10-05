@@ -46,7 +46,7 @@
 nameSuffix="_$USER" # change this to whatever you want. E.g. "_yournamehere"
 
 # A pattern that matches all desired input files:
-input='*input*.txt'
+input='*.txt'
 
 # A pattern or listing of files to display complexity readouts for:
 filesToCheckComplexity='*.h *.cpp'
