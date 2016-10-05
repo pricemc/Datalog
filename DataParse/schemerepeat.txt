@@ -1,3 +1,4 @@
+#testing repeating schemes which actually caught a bug
 Schemes:
   snap(S,N,A,P)
   look(T,X,Z)

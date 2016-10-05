@@ -1,3 +1,4 @@
+#basic test testing that it all works
 Schemes:
   snap(S,N,A,P)
 

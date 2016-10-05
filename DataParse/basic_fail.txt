@@ -1,3 +1,4 @@
+#rules should not have a ?
 Schemes:
     snap(S,N,A,P) 
     NameHasID(N,S)
