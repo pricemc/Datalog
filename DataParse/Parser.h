@@ -1,31 +1,37 @@
 #pragma once
 #include <iostream>
 #include <deque>
+#include <utility>
 
 #include "Token.h"
+#include "datalogProgram.h"
+#include "expression.h"
+#include "parameter.h"
+#include "predicate.h"
+#include "rule.h"
 
 class Parser
 {
 public:
 	Parser();
 	~Parser();
-	bool parse(std::deque<Token*>& tokens);
+	std::pair<bool,datalogProgram> parse(std::deque<Token*>& tokens);
 private:
-	bool datalogProgram(std::deque<Token*>& tokens);
+	bool mdatalogProgram(std::deque<Token*>& tokens);
 	bool scheme(std::deque<Token*>& tokens);
 	bool schemeList(std::deque<Token*>& tokens);
-	bool idList(std::deque<Token*>& tokens);
+	std::pair<bool, std::deque<parameter*>> idList(std::deque<Token*>& tokens);
 	bool fact(std::deque<Token*>& tokens);
 	bool factList(std::deque<Token*>& tokens);
-	bool rule(std::deque<Token*>& tokens);
+	bool mrule(std::deque<Token*>& tokens);
 	bool ruleList(std::deque<Token*>& tokens);
-	bool headPredicate(std::deque<Token*>& tokens);
-	bool predicate(std::deque<Token*>& tokens);
-	bool predicateList(std::deque<Token*>& tokens);
-	bool parameter(std::deque<Token*>& tokens);
-	bool parameterList(std::deque<Token*>& tokens);
-	bool expression(std::deque<Token*>& tokens);
-	bool moperator(std::deque<Token*>& tokens);
+	std::pair<bool, predicate*> headPredicate(std::deque<Token*>& tokens);
+	std::pair<bool, predicate*> mpredicate(std::deque<Token*>& tokens);
+	std::pair<bool, std::deque<predicate*>> predicateList(std::deque<Token*>& tokens);
+	std::pair<bool, parameter*> mparameter(std::deque<Token*>& tokens);
+	std::pair<bool, std::deque<parameter*>> parameterList(std::deque<Token*>& tokens);
+	std::pair<bool, expression*> mexpression(std::deque<Token*>& tokens);
+	std::pair<bool, parameter*> moperator(std::deque<Token*>& tokens);
 	bool query(std::deque<Token*>& tokens);
 	bool queryList(std::deque<Token*>& tokens);
 	bool stringList(std::deque<Token*>& tokens);
@@ -54,5 +60,8 @@ private:
 	bool mEOF(std::deque<Token*>& tokens);
 
 	bool restart(std::deque<Token*>& tokens);
+
+private:
+	datalogProgram program;
 };
 
