@@ -69,16 +69,21 @@
     <ClCompile Include="ColonDash.cpp" />
     <ClCompile Include="Comma.cpp" />
     <ClCompile Include="Comment.cpp" />
+    <ClCompile Include="datalogProgram.cpp" />
+    <ClCompile Include="expression.cpp" />
     <ClCompile Include="Facts.cpp" />
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="Id.cpp" />
     <ClCompile Include="Left_paren.cpp" />
     <ClCompile Include="Multiply.cpp" />
+    <ClCompile Include="parameter.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Period.cpp" />
+    <ClCompile Include="predicate.cpp" />
     <ClCompile Include="Queries.cpp" />
     <ClCompile Include="Q_mark.cpp" />
     <ClCompile Include="Right_paren.cpp" />
+    <ClCompile Include="rule.cpp" />
     <ClCompile Include="Rules.cpp" />
     <ClCompile Include="Scanner.cpp" />
     <ClCompile Include="Schemes.cpp" />
@@ -96,16 +101,21 @@
     <ClInclude Include="ColonDash.h" />
     <ClInclude Include="Comma.h" />
     <ClInclude Include="Comment.h" />
+    <ClInclude Include="datalogProgram.h" />
+    <ClInclude Include="expression.h" />
     <ClInclude Include="Facts.h" />
     <ClInclude Include="FileReader.h" />
     <ClInclude Include="Id.h" />
     <ClInclude Include="Left_paren.h" />
     <ClInclude Include="Multiply.h" />
+    <ClInclude Include="parameter.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Period.h" />
+    <ClInclude Include="predicate.h" />
     <ClInclude Include="Queries.h" />
     <ClInclude Include="Q_mark.h" />
     <ClInclude Include="Right_paren.h" />
+    <ClInclude Include="rule.h" />
     <ClInclude Include="Rules.h" />
     <ClInclude Include="Scanner.h" />
     <ClInclude Include="Schemes.h" />
@@ -116,7 +126,7 @@
     <ClInclude Include="Undefined_String.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="test.txt" />
+    <None Include="run.sh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
