@@ -64,9 +64,8 @@ int main(int argc, char *argv[])
 	//	i++;
 	}
 
-	std::cout << "Relations:\n" << r.toString() << "Done\n";
+	std::cout << "Relations:\n" << r.toString() << endl;
 
-	//std::cout << "Select x = 'x'\n" << r.select(0, "x").toString();
 	vector<string> s = r.scheme.getMyAttributes();
 	for (int i = 0; i < s.size(); i++)
 	{
@@ -90,8 +89,13 @@ int main(int argc, char *argv[])
 		std::cout << "Project = " << ":\n" << r.project(z).toString();
 	}
 	z.clear();
-	z.push_back(2);
-	cout << "Project = " << ":\n" << r.project(z).toString();
+	cout << "PASS\n";
+
+	std::cout << "Rename x = y :\n" << r.rename("y", 0).toString();
+
+	std::cout << "Rename y = old :\n" << r.rename("old", 1).toString();
+	z.clear();
+	cout << "PASS\n";
 	system("pause");
 	return 0;
 }

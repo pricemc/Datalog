@@ -87,9 +87,17 @@ Relation Relation::project(vector<int>& myIndicies)
 	return r;
 }
 
-void Relation::rename(string s, size_t j)
+Relation Relation::rename(string s, size_t j)
 {
-	scheme.myAttributes.at(j) = s;
+	Relation r;
+	r.name = name;
+	r.scheme = scheme;
+	r.myTuples = myTuples;
+	r.mySchemes = mySchemes;
+	r.myFacts = myFacts;
+	r.myQueries = myQueries;
+	r.scheme.myAttributes.at(j) = s;
+	return r;
 }
 
 void Relation::setNameSchema(vector<predicate*>& s, size_t i)

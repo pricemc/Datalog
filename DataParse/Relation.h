@@ -31,7 +31,7 @@ public:
 
 	Relation project(vector<int>&);
 
-	void rename(string, size_t);
+	Relation rename(string, size_t);
 
 	void setNameSchema(vector<predicate*>&, size_t);
 
