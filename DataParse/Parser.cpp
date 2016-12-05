@@ -39,9 +39,9 @@ bool Parser::mdatalogProgram(std::deque<Token*>& tokens)
 	{
 		for (int i = 0; i < program.facts.size(); i++)
 		{
-			for (int j = 0; j < program.facts[i]->params.size(); i++)
+			for (int j = 0; j < program.facts[i]->params.size(); j++)
 			{
-				program.addDomain(program.facts[i]->params[i]);
+				program.addDomain(program.facts[i]->params[j]);
 			}
 		}
 	}
@@ -114,10 +114,29 @@ std::pair<bool, std::deque<parameter*>> Parser::idList(std::deque<Token*>& token
 }
 bool Parser::fact(std::deque<Token*>& tokens)
 {
-	if (ID(tokens))
+	/*if (ID(tokens))
 		return (LEFT_PAREN(tokens) && STRING(tokens)
 			&& stringList(tokens) && RIGHT_PAREN(tokens) && PERIOD(tokens));
-	return false;
+	return false;*/
+
+	bool output = false;
+	std::pair<bool, std::deque<parameter*>> oidList;
+	std::string first = tokens.front()->getString();
+	std::string second = tokens[2]->getString();
+	if (ID(tokens))
+	{
+		output = (LEFT_PAREN(tokens) && STRING(tokens));
+		oidList = stringList(tokens);
+		output = output && oidList.first && RIGHT_PAREN(tokens) && PERIOD(tokens);
+		oidList.second.push_front(new parameter(second));
+	}
+	std::deque<parameter*> a = oidList.second;
+	if (output)
+	{
+		predicate* b = new predicate(parameter(first), a);
+		program.addFact(b);
+	}
+	return output;
 }
 bool Parser::factList(std::deque<Token*>& tokens)
 {
@@ -130,6 +149,7 @@ bool Parser::factList(std::deque<Token*>& tokens)
 bool Parser::mrule(std::deque<Token*>& tokens)
 { 
 	std::pair<bool, predicate*> head = headPredicate(tokens);
+	std::cout << head.first;
 	std::deque<predicate*> output;
 	std::pair<bool, std::deque<predicate*>> list;
 	list.first = false;
@@ -182,7 +202,7 @@ std::pair<bool, predicate*> Parser::headPredicate(std::deque<Token*>& tokens)
 	{
 		p_output = new predicate(parameter(first), a);
 	}
-	return std::make_pair(false, p_output);
+	return std::make_pair(output, p_output);
 }
 std::pair<bool, predicate*> Parser::mpredicate(std::deque<Token*>& tokens)
 {
@@ -277,13 +297,29 @@ bool Parser::queryList(std::deque<Token*>& tokens)
 		return true;
 	return false;
 }
-bool Parser::stringList(std::deque<Token*>& tokens)
+std::pair<bool, std::deque<parameter*>> Parser::stringList(std::deque<Token*>& tokens)
 {
-	if (COMMA(tokens))
+	/*if (COMMA(tokens))
 		return (STRING(tokens) && stringList(tokens));
 	else if (tokens.front()->getName() == "RIGHT_PAREN")
 		return true;
-	return false;
+	return false;*/
+
+	bool output = true;
+	std::deque<parameter*> p_output;
+	if (COMMA(tokens))
+	{
+		std::string first = tokens.front()->getString();
+		output = output && STRING(tokens);
+		std::pair<bool, std::deque<parameter*>> list = stringList(tokens);
+		output = output && list.first;
+		list.second.push_front(new parameter(first));
+		list.first = output;
+		return list;
+	}
+	else if (tokens.front()->getName() == "RIGHT_PAREN")
+		return std::make_pair(true, p_output);
+	return std::make_pair(false, p_output);
 }
 
 

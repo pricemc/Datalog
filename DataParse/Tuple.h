@@ -14,5 +14,6 @@ public:
 	Tuple();
 	virtual ~Tuple();
 
+	std::string toString(vector<string>&, vector<size_t>&);
 	void printTuple(ofstream&, vector<string>&, vector<size_t>&);
 };

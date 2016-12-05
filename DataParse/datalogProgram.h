@@ -17,8 +17,6 @@ public:
 	int factSize();
 	std::string toString();
 	std::vector<predicate*> facts;
-
-private:
 	std::vector<predicate*> schemes;
 	std::vector<rule*> rules;
 	std::vector<predicate*> queries;

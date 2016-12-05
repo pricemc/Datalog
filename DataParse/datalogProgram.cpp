@@ -1,5 +1,5 @@
 #include "datalogProgram.h"
-
+#include <iostream>
 
 datalogProgram::datalogProgram()
 {
@@ -16,6 +16,7 @@ void datalogProgram::addScheme(predicate* add)
 }
 void datalogProgram::addFact(predicate* add)
 {
+	std::cout << "here";
 	facts.push_back(add);
 }
 void datalogProgram::addRule(rule* add)

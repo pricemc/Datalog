@@ -257,6 +257,22 @@ size_t Relation::isThereAnother(string id, deque<parameter*> p, size_t j)
 	return duplicateIndex;
 }
 
+std::string Relation::toString()
+{
+	stringstream out;
+	set<Tuple>::iterator it;
+	vector<string> myAttributes = scheme.getMyAttributes();
+	vector<size_t> varIndex;
+	for (it = myTuples.begin(); it != myTuples.end(); it++)
+	{
+		Tuple temp;
+		temp = *it;
+
+		out << temp.toString(myAttributes, varIndex) << endl;
+	}
+	return out.str();
+}
+
 void Relation::printRelation(size_t i, ofstream& out, vector<size_t>& varIndex)
 {
 	set<Tuple>::iterator it;

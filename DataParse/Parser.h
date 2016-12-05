@@ -34,7 +34,7 @@ private:
 	std::pair<bool, parameter*> moperator(std::deque<Token*>& tokens);
 	bool query(std::deque<Token*>& tokens);
 	bool queryList(std::deque<Token*>& tokens);
-	bool stringList(std::deque<Token*>& tokens);
+	std::pair<bool, std::deque<parameter*>> stringList(std::deque<Token*>& tokens);
 
 	bool datalogSchemes(std::deque<Token*>& tokens);
 	bool datalogRules(std::deque<Token*>& tokens);
