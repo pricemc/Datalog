@@ -41,7 +41,13 @@ bool Parser::mdatalogProgram(std::deque<Token*>& tokens)
 		{
 			for (int j = 0; j < program.facts[i]->params.size(); j++)
 			{
-				program.addDomain(program.facts[i]->params[j]);
+				bool yes = true;
+				for (std::set<parameter*>::iterator x = program.domain.begin(); x != program.domain.end(); x++)
+				{
+					parameter* element = *x;
+					if (program.facts[i]->params[j]->name == element->name) yes = false;
+				}
+				if (yes) program.addDomain(program.facts[i]->params[j]);
 			}
 		}
 	}
@@ -105,6 +111,7 @@ std::pair<bool, std::deque<parameter*>> Parser::idList(std::deque<Token*>& token
 		{
 			std::pair<bool, std::deque<parameter*>> output = idList(tokens);
 			output.second.push_front(new parameter(first));
+			return std::make_pair(true, output.second);
 		}
 	}
 	else if (tokens.front()->getName() == "RIGHT_PAREN")
@@ -149,7 +156,6 @@ bool Parser::factList(std::deque<Token*>& tokens)
 bool Parser::mrule(std::deque<Token*>& tokens)
 { 
 	std::pair<bool, predicate*> head = headPredicate(tokens);
-	std::cout << head.first;
 	std::deque<predicate*> output;
 	std::pair<bool, std::deque<predicate*>> list;
 	list.first = false;

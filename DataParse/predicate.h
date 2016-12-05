@@ -9,9 +9,6 @@ public:
 	~predicate();
 	std::string toString();
 	std::deque<parameter*> params;
-	std::string info;
-	void setInfo(std::string);
-private:
 	parameter id;
 };
 

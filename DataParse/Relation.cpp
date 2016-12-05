@@ -62,6 +62,13 @@ Relation Relation::project(vector<int>& myIndicies)
 	Tuple projected;
 	int toProject;
 
+	vector<string> s;
+	vector<string> old = scheme.getMyAttributes();
+	for (int i = 0; i < myIndicies.size(); i++)
+	{
+		s.push_back(old.at(myIndicies[i]));
+	}
+	r.scheme.setAttributes(s);
 	for (it = myTuples.begin(); it != myTuples.end(); it++)
 	{
 		Tuple temp;
@@ -92,7 +99,7 @@ void Relation::setNameSchema(vector<predicate*>& s, size_t i)
 	size_t j = 0;
 	vector<string> schema;
 
-	name = mySchemes.at(index)->info;
+	name = mySchemes.at(index)->id.name;
 
 	while (j < mySchemes.at(index)->params.size())
 	{
@@ -113,7 +120,6 @@ void Relation::setTuples(vector<predicate*>& facts, size_t i)
 		t.push_back(myFacts.at(index)->params.at(j)->name);
 		j++;
 	}
-
 	myTuples.insert(t);
 }
 
@@ -122,7 +128,7 @@ void Relation::setName(vector<predicate*>& q, size_t i)
 	myQueries = q;
 	size_t index = i;
 
-	name = myQueries.at(index)->info;
+	name = myQueries.at(index)->id.name;
 }
 
 Relation Relation::evalParams(vector<predicate*>& q, size_t i, Relation source)
@@ -267,7 +273,6 @@ std::string Relation::toString()
 	{
 		Tuple temp;
 		temp = *it;
-
 		out << temp.toString(myAttributes, varIndex) << endl;
 	}
 	return out.str();

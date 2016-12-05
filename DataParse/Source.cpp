@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 {
 	//Usage Requirements
 	FileReader input;
-	std::string test = "Schemes: i(x) \nFacts: i('j'). i('x').\nRules: i(x):-i(x). \nQueries: HasSameAddress('Snoopy',Who)?";
+	std::string test = "Schemes: i(x, y, z) \nFacts: i('j', 'x', 'v'). i('x', 'butt', 'why'). j('j').\nRules: i(x):-i(x). \nQueries: HasSameAddress('Snoopy',Who)?";
 	if (argc != 2)
 	{
 		//use test data
@@ -37,36 +37,61 @@ int main(int argc, char *argv[])
 	std::pair<bool, datalogProgram> output = parser->parse(tokens);
 	std::cout << ((output.first ? "Success!" : "Failure.\n" + tokens.front()->toString()));
 	std::cout << std::endl;
-	
+	for (int i = 0; i < tokens.size(); i++) delete tokens[i];
+	delete parser;
+	std::cout << output.second.toString();
+
 	//Relational Database
 	vector<predicate*> schemes = output.second.schemes;
 	vector<predicate*> facts = output.second.facts;
 	vector<predicate*> queries = output.second.queries;
+	set<parameter*> domain = output.second.domain;
 
-	Relation rel;
+	Relation r;
 
 	int i = 0;
-	while (i < schemes.size())
+	//while (i < schemes.size())
 	{
-		Relation r;
 		r.setNameSchema(schemes, i);
 
 		for (int j = 0; j < facts.size(); j++)
 		{
-			if (r.name == facts.at(j)->info)
+			if (r.name == facts.at(j)->id.name)
 			{
 				r.setTuples(facts, j);
 			}
 		}
-		i++;
+	//	i++;
 	}
 
-	std::cout << rel.toString();
+	std::cout << "Relations:\n" << r.toString() << "Done\n";
 
+	//std::cout << "Select x = 'x'\n" << r.select(0, "x").toString();
+	vector<string> s = r.scheme.getMyAttributes();
+	for (int i = 0; i < s.size(); i++)
+	{
+		for (std::set<parameter*>::iterator x = domain.begin(); x != domain.end(); x++) {
+			parameter* element = *x;
+			std::cout << "Select " << s[i] << " = " << element->name << ":\n" << r.select(i, element->name).toString();
+		}
+	}
+	cout << "PASS\n";
 
-	for (int i = 0; i < tokens.size(); i++) delete tokens[i];
-	delete parser;
-	std::cout << output.second.toString();
+	vector<int> z;
+	for (int i = 0; i < s.size(); i++)
+	{
+		z.push_back(i);
+		std::cout << "Project = " << ":\n" << r.project(z).toString();
+	}
+	z.clear();
+	for (int i = s.size()-1; i >= 0; i--)
+	{
+		z.push_back(i);
+		std::cout << "Project = " << ":\n" << r.project(z).toString();
+	}
+	z.clear();
+	z.push_back(2);
+	cout << "Project = " << ":\n" << r.project(z).toString();
 	system("pause");
 	return 0;
 }
