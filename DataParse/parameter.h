@@ -8,7 +8,6 @@ public:
 	~parameter();
 	std::string toString();
 	int type();
-private:
 	std::string name;
 };
 

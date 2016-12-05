@@ -21,6 +21,6 @@ std::string parameter::toString()
 
 int parameter::type()
 {
-	if (name.substr(0, 1) == "\'") return 0;
+	if (name.substr(0, 1) == "\'") return 0; //if type = string return 0;
 	return 1;
 }
