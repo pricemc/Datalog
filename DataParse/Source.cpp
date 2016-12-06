@@ -41,6 +41,8 @@ int main(int argc, char *argv[])
 	delete parser;
 	std::cout << output.second.toString();
 
+	if (!output.first) return 0;
+
 	//Relational Database
 	vector<predicate*> schemes = output.second.schemes;
 	vector<predicate*> facts = output.second.facts;

@@ -111,6 +111,9 @@
     <ClCompile Include="Tuple.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Database.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Add.h">
@@ -209,10 +212,42 @@
     <ClInclude Include="Tuple.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Database.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="run.sh">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="basic_fail.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="basic2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="comment_fail.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="facts_fail.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="longer.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="longer_fail.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Queries.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="rulelist.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="schemerepeat.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -48,6 +48,6 @@ public:
 	size_t isThereAnother(string, deque<parameter*>, size_t);
 
 	std::string toString();
-	void printRelation(size_t, ofstream&, vector<size_t>&);
+	void printRelation(size_t, stringstream& out, vector<size_t>&);
 
 };

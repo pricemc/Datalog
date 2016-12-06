@@ -69,6 +69,7 @@
     <ClCompile Include="ColonDash.cpp" />
     <ClCompile Include="Comma.cpp" />
     <ClCompile Include="Comment.cpp" />
+    <ClCompile Include="Database.cpp" />
     <ClCompile Include="datalogProgram.cpp" />
     <ClCompile Include="expression.cpp" />
     <ClCompile Include="Facts.cpp" />
@@ -104,6 +105,7 @@
     <ClInclude Include="ColonDash.h" />
     <ClInclude Include="Comma.h" />
     <ClInclude Include="Comment.h" />
+    <ClInclude Include="Database.h" />
     <ClInclude Include="datalogProgram.h" />
     <ClInclude Include="expression.h" />
     <ClInclude Include="Facts.h" />
@@ -133,6 +135,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="run.sh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="basic2.txt" />
+    <Text Include="basic_fail.txt" />
+    <Text Include="comment_fail.txt" />
+    <Text Include="facts_fail.txt" />
+    <Text Include="longer.txt" />
+    <Text Include="longer_fail.txt" />
+    <Text Include="Queries.txt" />
+    <Text Include="rulelist.txt" />
+    <Text Include="schemerepeat.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
