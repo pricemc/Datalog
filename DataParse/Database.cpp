@@ -68,6 +68,7 @@ void Database::evalQueries(vector<predicate*>& q)
 
 string Database::printResults()
 {
+	//original results lab 3pt2
 	stringstream output;
 	vector<int> varIndex;
 	vector<string> variablesAlreadytoBePrinted;
@@ -85,6 +86,8 @@ string Database::printResults()
 		varIndex.clear();
 		variablesAlreadytoBePrinted.clear();
 	}
+
+
 	return output.str();
 }
 

@@ -288,3 +288,123 @@ string Relation::printRelation(int i, stringstream& out, vector<int>& varIndex)
 	}
 	return out.str();
 }
+
+bool Relation::joinable(Scheme& s1, Scheme& s2, Tuple& t1, Tuple& t2)
+{
+	string name1, name2;
+	string v1, v2;
+
+	for (int i = 0; i < s1.myAttributes.size(); i++)
+	{
+		name1 = s1.myAttributes.at(i);
+		v1 = t1.at(i);
+
+		for (int j = 0; j < s2.myAttributes.size(); j++)
+		{
+			name2 = s2.myAttributes.at(j);
+			v2 = t2.at(j);
+
+			if (name1 == name2 && v1 != v2)
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+Scheme Relation::join(Scheme s1, Scheme s2)
+{
+	//fix
+	Scheme s;
+	bool toAdd;
+
+	for (int i = 0; i < s2.myAttributes.size(); i++)
+	{
+		toAdd = true;
+
+		for (int j = 0; j < s1.myAttributes.size(); j++)
+		{
+			if (s2.myAttributes.at(i) == s1.myAttributes.at(j))
+			{
+				toAdd = false;
+				break;
+			}
+		}
+		if (toAdd)
+		{
+			s1.myAttributes.push_back(s2.myAttributes.at(i));
+		}
+	}
+	return s1;
+}
+
+Tuple Relation::join(Scheme s1, Scheme s2, Tuple t1, Tuple t2)
+{
+	Tuple t;
+	bool toAdd;
+
+	for (int i = 0; i < t1.size(); i++)
+	{
+		t.push_back(t1.at(i));
+	}
+	for (int j = 0; j < t2.size(); j++)
+	{
+		toAdd = true;
+
+		for (int z = 0; z < s1.myAttributes.size(); z++)
+		{
+			if (s2.myAttributes.at(j) == s1.myAttributes.at(z))
+			{
+				toAdd = false;
+				break;
+			}
+		}
+		if (toAdd)
+		{
+			t.push_back(t2.at(j));
+		}
+	}
+
+	return t;
+}
+
+Relation Relation::join(Relation one, Relation two)
+{
+	Relation r;
+	Scheme s;
+	Tuple t;
+	set<Tuple>::iterator it;
+	set<Tuple>::iterator iter;
+	s = join(one.scheme, two.scheme);
+	r.scheme = s;
+	for (it = one.myTuples.begin(); it != one.myTuples.end(); it++)
+	{
+		Tuple t1 = *it;
+		for (iter = two.myTuples.begin(); iter != two.myTuples.end(); iter++)
+		{
+			Tuple t2 = *iter;
+			if (joinable(one.scheme, two.scheme, t1, t2))
+			{
+				t = join(one.scheme, two.scheme, t1, t2);//*iter);
+				r.myTuples.insert(t);
+			}
+		}
+	}
+	return r;
+}
+
+Relation Relation::unionWith(Relation toUnion)
+{
+	set<Tuple>::iterator it;
+
+	for (it = myTuples.begin(); it != myTuples.end(); it++)
+	{
+		Tuple temp;
+		temp = *it;
+
+		toUnion.myTuples.insert(temp);
+	}
+
+	return toUnion;
+}

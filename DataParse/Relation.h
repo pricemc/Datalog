@@ -49,4 +49,18 @@ public:
 
 	string printRelation(int, stringstream& out, vector<int>&);
 
+	Relation project(vector<parameter>&);
+
+	Relation unionWith(Relation);
+
+	Relation join(Relation, Relation);
+
+	Scheme join(Scheme, Scheme);
+
+	Tuple join(Scheme, Scheme, Tuple, Tuple);
+
+	bool joinable(Scheme&, Scheme&, Tuple&, Tuple&);
+
+	int getNumTuples();
+
 };

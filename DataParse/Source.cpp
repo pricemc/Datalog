@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 {
 	//Usage Requirements
 	FileReader input;
-	std::string test = "Schemes:  	dc(D,C) Facts: 	dc('ralph','howard'). Rules:  Queries: 	dc('ralph', X)? 	dc('bob','bob')? 	dc(X,Y)?";
+	std::string test = "Schemes: people(x,y) employer(x,z) sk(i,z) i(i,z) j(z,i) Facts: j('x', 'y'). sk('x', 'y'). employer('joe','y'). employer('joe','x'). people('joe','bob'). people('jim','bob'). people('joe','jim'). employer('ralph','howard'). people('bob','bob'). Rules: employer(X,Y):- people(Y,X). employer(X,Y):- people(X,Z),employer(Z,Y). people(X,Y):- people(Y,X). Queries: people('joe','jim')? people( who, 'bob')? people('joe', anyone)? people(X,X)? people(X,Y)? employer('ralph', X)? employer('bob','bob')? employer(X,Y)?";
 	if (argc != 2)
 	{
 		//use test data
@@ -35,84 +35,28 @@ int main(int argc, char *argv[])
 	int j = 0; 
 	stringstream dd;
 	vector<int> varIndex;
-	for (int i = 0; i < db.toPrint.size(); i++)
+	varIndex.push_back(1);
+	int x = 1;
+
+	//each test is on the above datalog program of 4 schemes with at least (0) facts each. There are at least 10 tests that union or join each of them together.
+	for (int i = 0; i < db.relations.size(); i++)
 	{
-		//cout << db.toPrint[i].printRelation(j,dd,varIndex);
+		if (x == db.relations.size()) x = 0;
+		cout << "Union " << db.relations[i].name << " with " << db.relations[x].name << endl;
+		cout << db.relations[i].unionWith(db.relations[x]).printRelation(j, dd, varIndex) << endl;
+		dd.str("");
+		x++;
 	}
-	cout << db.printResults();
-
-	/*for (int i = 0; i < tokens.size(); i++)
+	cout << "PASS\n\n";
+	for (int i = 0; i < db.relations.size(); i++)
 	{
-		std::cout << tokens[i]->getName() << std::endl;
-	}*/
-
-	/*//Datalog Parser
-	Parser* parser = new Parser();
-	std::pair<bool, datalogProgram> output = parser->parse(tokens);
-	std::cout << ((output.first ? "Success!" : "Failure.\n" + tokens.front()->toString()));
-	std::cout << std::endl;
-	for (int i = 0; i < tokens.size(); i++) delete tokens[i];
-	delete parser;
-	std::cout << output.second.toString();
-
-	if (!output.first) return 0;
-
-	//Relational Database
-	vector<predicate*> schemes = output.second.schemes;
-	vector<predicate*> facts = output.second.facts;
-	vector<predicate*> queries = output.second.queries;
-	set<parameter*> domain = output.second.domain;
-
-	Relation r;
-
-	int i = 0;
-	//while (i < schemes.size())
-	{
-		r.setNameSchema(schemes, i);
-
-		for (int j = 0; j < facts.size(); j++)
-		{
-			if (r.name == facts.at(j)->id.name)
-			{
-				r.setTuples(facts, j);
-			}
-		}
-	//	i++;
+		if (x == db.relations.size()) x = 0;
+		cout << "Natural Join " << db.relations[i].name << " with " << db.relations[x].name << endl;
+		cout << db.relations[i].join(db.relations[i], db.relations[x]).printRelation(j, dd, varIndex)<< endl;
+		dd.str("");
+		x++;
 	}
-
-	std::cout << "Relations:\n" << r.toString() << endl;
-
-	vector<string> s = r.scheme.getMyAttributes();
-	for (int i = 0; i < s.size(); i++)
-	{
-		for (std::set<parameter*>::iterator x = domain.begin(); x != domain.end(); x++) {
-			parameter* element = *x;
-			std::cout << "Select " << s[i] << " = " << element->name << ":\n" << r.select(i, element->name).toString();
-		}
-	}
-	cout << "PASS\n";
-
-	vector<int> z;
-	for (int i = 0; i < s.size(); i++)
-	{
-		z.push_back(i);
-		std::cout << "Project = " << ":\n" << r.project(z).toString();
-	}
-	z.clear();
-	for (int i = s.size()-1; i >= 0; i--)
-	{
-		z.push_back(i);
-		std::cout << "Project = " << ":\n" << r.project(z).toString();
-	}
-	z.clear();
-	cout << "PASS\n";
-
-	std::cout << "Rename x = y :\n" << r.rename("y", 0).toString();
-
-	std::cout << "Rename y = old :\n" << r.rename("old", 1).toString();
-	z.clear();
-	cout << "PASS\n";*/
-
-
+	cout << "PASS\n\n";
+	system("pause");
 	return 0;
 }
