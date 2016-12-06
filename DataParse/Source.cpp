@@ -7,13 +7,14 @@
 
 #include "Parser.h"
 #include "Relation.h"
+#include "Database.h"
 
 
 int main(int argc, char *argv[])
 {
 	//Usage Requirements
 	FileReader input;
-	std::string test = "Schemes: i(x, y, z) \nFacts: i('j', 'x', 'v'). i('x', 'butt', 'why'). j('j').\nRules: i(x):-i(x). \nQueries: HasSameAddress('Snoopy',Who)?";
+	std::string test = "Schemes:  	dc(D,C) Facts: 	dc('ralph','howard'). Rules:  Queries: 	dc('ralph', X)? 	dc('bob','bob')? 	dc(X,Y)?";
 	if (argc != 2)
 	{
 		//use test data
@@ -26,13 +27,26 @@ int main(int argc, char *argv[])
 	}
 	Scanner a;
 	std::deque<Token*> tokens = a.read(input);
+	Parser* parser = new Parser();
+	std::pair<bool, datalogProgram> output = parser->parse(tokens);
+
+	Database db;
+	db.fill(output.second);
+	int j = 0; 
+	stringstream dd;
+	vector<int> varIndex;
+	for (int i = 0; i < db.toPrint.size(); i++)
+	{
+		//cout << db.toPrint[i].printRelation(j,dd,varIndex);
+	}
+	cout << db.printResults();
 
 	/*for (int i = 0; i < tokens.size(); i++)
 	{
 		std::cout << tokens[i]->getName() << std::endl;
 	}*/
 
-	//Datalog Parser
+	/*//Datalog Parser
 	Parser* parser = new Parser();
 	std::pair<bool, datalogProgram> output = parser->parse(tokens);
 	std::cout << ((output.first ? "Success!" : "Failure.\n" + tokens.front()->toString()));
@@ -97,7 +111,8 @@ int main(int argc, char *argv[])
 
 	std::cout << "Rename y = old :\n" << r.rename("old", 1).toString();
 	z.clear();
-	cout << "PASS\n";
-	system("pause");
+	cout << "PASS\n";*/
+
+
 	return 0;
 }

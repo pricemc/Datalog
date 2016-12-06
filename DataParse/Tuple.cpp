@@ -11,52 +11,56 @@ Tuple::~Tuple() {
 	// TODO Auto-generated destructor stub
 }
 
-std::string Tuple::toString(vector<string>& myAttributes, vector<size_t>& varIndex)
+std::string Tuple::toString(vector<string>& myAttributes, vector<int>& varIndex)
 {
 	stringstream output;
-	for (size_t i = 0; i < size(); i++)
+	if (varIndex.size() > 0)
 	{
-		if (i < size() - 1)
+		for (int i = 0; i < size(); i++)
 		{
-			if (i == 0)
+			if (i < size() - 1)
 			{
-				output << "\t" << myAttributes.at(i) << "=" << at(i) << ", ";
+				if (i == 0)
+				{
+					output << "  " << myAttributes.at(i) << "=" << at(i) << ", ";
+				}
+				else
+				{
+					output << myAttributes.at(i) << "=" << at(i) << ", ";
+				}
 			}
 			else
 			{
-				output << myAttributes.at(i) << "=" << at(i) << ", ";
+				if (i == 0)
+				{
+					output << "  " << myAttributes.at(i) << "=" << at(i);
+				}
+				else
+				{
+					output << myAttributes.at(i) << "=" << at(i);
+				}
 			}
 		}
-		else
-		{
-			if (i == 0)
-			{
-				output << "\t" << myAttributes.at(i) << "=" << at(i);
-			}
-			else
-			{
-				output << myAttributes.at(i) << "=" << at(i);
-			}
-		}
+		output << endl;
 	}
 	
 	return output.str();
 }
 
-void Tuple::printTuple(ofstream& out, vector<string>& myAttributes, vector<size_t>& varIndex)
+string Tuple::printTuple(stringstream& out, vector<string>& myAttributes, vector<int>& varIndex)
 {
-	if (varIndex.size() > 0) //there are variables to print
+	//if (varIndex.size() > 0) //there are variables to print
 	{
 		if (varIndex.size() < 2)
 		{
-			for (size_t i = 0; i < size(); i++)
+			for (int i = 0; i < size(); i++)
 			{
 				out << "  " << myAttributes.at(varIndex.at(i)) << "='" << at(i) << "'" << endl;
 			}
 		}
 		else
 		{
-			for (size_t i = 0; i < size(); i++)
+			for (int i = 0; i < size(); i++)
 			{
 				if (i < size() - 1)
 				{
@@ -83,4 +87,5 @@ void Tuple::printTuple(ofstream& out, vector<string>& myAttributes, vector<size_
 			}
 		}
 	}
+	return out.str();
 }

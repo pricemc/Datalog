@@ -7,6 +7,7 @@
 #include <string>
 #include "Relation.h"
 #include "predicate.h"
+#include "datalogProgram.h"
 
 using namespace std;
 
@@ -24,11 +25,11 @@ public:
 
 	void addRelation(Relation);
 
-	void fill(vector<predicate*>&, vector<predicate*>&, vector<predicate*>&);
+	void fill(datalogProgram&);
 
 	void evalQueries(vector<predicate*>&);
 
 	string printResults();
-	string printParams(vector<size_t>&, vector<string>&, bool, size_t, stringstream&);
+	string printParams(vector<int>&, vector<string>&, bool, int, stringstream&);
 
 };

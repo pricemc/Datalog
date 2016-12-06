@@ -25,29 +25,28 @@ public:
 	vector<predicate*> myFacts;
 	vector<predicate*> myQueries;
 
-	Relation select(size_t, string);
+	Relation select(int, string);
 
-	Relation select(size_t, size_t);
+	Relation select(int, int);
 
 	Relation project(vector<int>&);
 
-	Relation rename(string, size_t);
+	void rename(string, int);
 
-	void setNameSchema(vector<predicate*>&, size_t);
+	void setNameSchema(vector<predicate*>&, int);
 
-	void setTuples(vector<predicate*>&, size_t);
+	void setTuples(vector<predicate*>&, int);
 
-	void setName(vector<predicate*>&, size_t);
+	void setName(vector<predicate*>&, int);
 
-	Relation evalParams(vector<predicate*>&, size_t, Relation);
-	void evalParamID(Relation&, Relation&, size_t&, size_t&, size_t&,
+	Relation evalParams(vector<predicate*>&, int, Relation);
+	void evalParamID(Relation&, Relation&, int&, int&, int&,
 		vector<string>&, vector<int>&, bool);
-	void thereIsADuplicate(Relation&, Relation&, size_t&, size_t&, size_t&,
+	void thereIsADuplicate(Relation&, Relation&, int&, int&, int&,
 		vector<string>&, vector<int>&, bool);
 
-	size_t isThereAnother(string, deque<parameter*>, size_t);
+	int isThereAnother(string, deque<parameter*>, int);
 
-	std::string toString();
-	void printRelation(size_t, stringstream& out, vector<size_t>&);
+	string printRelation(int, stringstream& out, vector<int>&);
 
 };

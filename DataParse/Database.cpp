@@ -15,36 +15,36 @@ void Database::addRelation(Relation r)
 	relations.push_back(r);
 }
 
-void Database::fill(vector<predicate*>& s, vector<predicate*>& f, vector<predicate*>& q)
+void Database::fill(datalogProgram& dp)
 {
-	schemes = s;
-	facts = f;
-	queries = q;
-	size_t i = 0;
-	size_t j = 0;
+	schemes = dp.schemes;
+	facts = dp.facts;
+	queries = dp.queries;
+	int i = 0;
+	int j = 0;
 
 	while (i < schemes.size())
 	{
 		Relation r;
-		r.setNameSchema(s, i);
+		r.setNameSchema(dp.schemes, i);
 
 		for (j = 0; j < facts.size(); j++)
 		{
 			if (r.name == facts.at(j)->id.name)
 			{
-				r.setTuples(f, j);
+				r.setTuples(dp.facts, j);
 			}
 		}
 
 		addRelation(r);
 		i++;
 	}
-	evalQueries(q);
+	evalQueries(dp.queries);
 }
 
 void Database::evalQueries(vector<predicate*>& q)
 {
-	size_t i = 0;
+	int i = 0;
 	Relation temp, relToAdd;
 
 	while (i < queries.size())
@@ -52,7 +52,7 @@ void Database::evalQueries(vector<predicate*>& q)
 		Relation r;
 		r.setName(q, i);
 
-		for (size_t j = 0; j < relations.size(); j++)
+		for (int j = 0; j < relations.size(); j++)
 		{
 			if (r.name == relations.at(j).name)
 			{
@@ -68,36 +68,36 @@ void Database::evalQueries(vector<predicate*>& q)
 
 string Database::printResults()
 {
-	stringstream out;
-	vector<size_t> varIndex;
+	stringstream output;
+	vector<int> varIndex;
 	vector<string> variablesAlreadytoBePrinted;
-	bool toAdd;
+	bool toAdd = false;
 
-	for (size_t i = 0; i < queries.size(); i++)
+	for (int i = 0; i < queries.size(); i++)
 	{
-		out << queries.at(i)->toString();
+		output << queries.at(i)->id.name << "(";
 
-		printParams(varIndex, variablesAlreadytoBePrinted, toAdd, i, out);
+		printParams(varIndex, variablesAlreadytoBePrinted, toAdd, i, output);
 
-		out << ")? ";
+		output << ")? ";
 
-		toPrint.at(i).printRelation(i, out, varIndex);
+		toPrint.at(i).printRelation(i, output, varIndex);
 		varIndex.clear();
 		variablesAlreadytoBePrinted.clear();
 	}
-	return out.str();
+	return output.str();
 }
 
 
 
-string Database::printParams(vector<size_t>& varIndex, vector<string>& variablesAlreadytoBePrinted, bool toAdd, size_t i, stringstream& out) {
-	for (size_t j = 0; j < queries.at(i)->params.size(); j++)
+string Database::printParams(vector<int>& varIndex, vector<string>& variablesAlreadytoBePrinted, bool toAdd, int i, stringstream& output) {
+	for (int j = 0; j < queries.at(i)->params.size(); j++)
 	{
-		out << queries.at(i)->params.at(j)->toString();
+		output << queries.at(i)->params.at(j)->toString();
 
 		if (j < (queries.at(i)->params.size() - 1))
 		{
-			out << ",";
+			output << ",";
 		}
 
 		if (queries.at(i)->params.at(j)->type() == 1)
@@ -111,7 +111,7 @@ string Database::printParams(vector<size_t>& varIndex, vector<string>& variables
 			}
 			else
 			{
-				for (size_t y = 0; y < variablesAlreadytoBePrinted.size(); y++)
+				for (int y = 0; y < variablesAlreadytoBePrinted.size(); y++)
 				{
 					if (queries.at(i)->params.at(j)->name == variablesAlreadytoBePrinted.at(y))
 					{
@@ -127,5 +127,5 @@ string Database::printParams(vector<size_t>& varIndex, vector<string>& variables
 			}
 		}
 	}
-	return out.str();
+	return output.str();
 }

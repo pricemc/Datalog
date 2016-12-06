@@ -11,7 +11,7 @@ Relation::~Relation()
 }
 
 
-Relation Relation::select(size_t index, string value)
+Relation Relation::select(int index, string value)
 {
 	Relation r;
 	r.name = name;
@@ -32,7 +32,7 @@ Relation Relation::select(size_t index, string value)
 	return r;
 }
 
-Relation Relation::select(size_t index1, size_t index2)
+Relation Relation::select(int index1, int index2)
 {
 	Relation r;
 	r.name = name;
@@ -74,7 +74,7 @@ Relation Relation::project(vector<int>& myIndicies)
 		Tuple temp;
 		temp = *it;
 
-		for (size_t i = 0; i < myIndicies.size(); i++)
+		for (int i = 0; i < myIndicies.size(); i++)
 		{
 			toProject = myIndicies.at(i);
 			projected.push_back(temp.at(toProject));
@@ -87,24 +87,16 @@ Relation Relation::project(vector<int>& myIndicies)
 	return r;
 }
 
-Relation Relation::rename(string s, size_t j)
+void Relation::rename(string s, int j)
 {
-	Relation r;
-	r.name = name;
-	r.scheme = scheme;
-	r.myTuples = myTuples;
-	r.mySchemes = mySchemes;
-	r.myFacts = myFacts;
-	r.myQueries = myQueries;
-	r.scheme.myAttributes.at(j) = s;
-	return r;
+	scheme.myAttributes.at(j) = s;
 }
 
-void Relation::setNameSchema(vector<predicate*>& s, size_t i)
+void Relation::setNameSchema(vector<predicate*>& s, int i)
 {
 	mySchemes = s;
-	size_t index = i;
-	size_t j = 0;
+	int index = i;
+	int j = 0;
 	vector<string> schema;
 
 	name = mySchemes.at(index)->id.name;
@@ -116,11 +108,11 @@ void Relation::setNameSchema(vector<predicate*>& s, size_t i)
 	}
 }
 
-void Relation::setTuples(vector<predicate*>& facts, size_t i)
+void Relation::setTuples(vector<predicate*>& facts, int i)
 {
 	myFacts = facts;
-	size_t index = i;
-	size_t j = 0;
+	int index = i;
+	int j = 0;
 	Tuple t;
 
 	while (j < myFacts.at(index)->params.size())
@@ -131,23 +123,23 @@ void Relation::setTuples(vector<predicate*>& facts, size_t i)
 	myTuples.insert(t);
 }
 
-void Relation::setName(vector<predicate*>& q, size_t i)
+void Relation::setName(vector<predicate*>& q, int i)
 {
 	myQueries = q;
-	size_t index = i;
+	int index = i;
 
 	name = myQueries.at(index)->id.name;
 }
 
-Relation Relation::evalParams(vector<predicate*>& q, size_t i, Relation source)
+Relation Relation::evalParams(vector<predicate*>& q, int i, Relation source)
 {
-	size_t index = i;
-	size_t j = 0;
+	int index = i;
+	int j = 0;
 	Relation two, three;
 	vector<int> toProject;
-	vector<size_t> duplicateParams;
+	vector<int> duplicateParams;
 	vector<string> ids;
-	size_t duplicateIndex;
+	int duplicateIndex;
 	vector<string> alreadyProjected;
 	bool toAdd;
 
@@ -165,6 +157,7 @@ Relation Relation::evalParams(vector<predicate*>& q, size_t i, Relation source)
 			else //relation two has been edited so continue to edit it
 			{
 				two = two.select(j, myQueries.at(index)->params.at(j)->name);
+
 				j++;
 			}
 		}
@@ -173,7 +166,7 @@ Relation Relation::evalParams(vector<predicate*>& q, size_t i, Relation source)
 			evalParamID(source, two, index, j, duplicateIndex, alreadyProjected, toProject, toAdd);
 		}
 	}//done evaluating a query
-
+	
 	if (toProject.size() > 0)
 	{
 		if (two.name == "") {
@@ -190,9 +183,9 @@ Relation Relation::evalParams(vector<predicate*>& q, size_t i, Relation source)
 }
 
 void Relation::evalParamID(Relation& source, Relation& two,
-	size_t& index, size_t& j, size_t& duplicateIndex,
+	int& index, int& j, int& duplicateIndex,
 	vector<string>& alreadyProjected, vector<int>& toProject, bool toAdd) {
-
+	
 	source.rename(myQueries.at(index)->params.at(j)->name, j);
 	if (two.name != "") {
 		two.rename(myQueries.at(index)->params.at(j)->name, j);
@@ -205,7 +198,7 @@ void Relation::evalParamID(Relation& source, Relation& two,
 		thereIsADuplicate(source, two, index, j, duplicateIndex, alreadyProjected, toProject, toAdd);
 	}
 	else {
-		for (size_t y = 0; y < alreadyProjected.size(); y++) {
+		for (int y = 0; y < alreadyProjected.size(); y++) {
 			if (myQueries.at(index)->params.at(j)->name
 				== alreadyProjected.at(y)) {
 				toAdd = false;
@@ -220,7 +213,7 @@ void Relation::evalParamID(Relation& source, Relation& two,
 }
 
 void Relation::thereIsADuplicate(Relation& source, Relation& two,
-	size_t& index, size_t& j, size_t& duplicateIndex,
+	int& index, int& j, int& duplicateIndex,
 	vector<string>& alreadyProjected, vector<int>& toProject, bool toAdd) {
 
 	if (two.name == "") {
@@ -230,7 +223,7 @@ void Relation::thereIsADuplicate(Relation& source, Relation& two,
 		two = two.select(j, duplicateIndex);
 	}
 
-	for (size_t y = 0; y < alreadyProjected.size(); y++) {
+	for (int y = 0; y < alreadyProjected.size(); y++) {
 		if (myQueries.at(index)->params.at(j)->name
 			== alreadyProjected.at(y)) {
 			toAdd = false;
@@ -245,20 +238,23 @@ void Relation::thereIsADuplicate(Relation& source, Relation& two,
 	j++;
 }
 
-size_t Relation::isThereAnother(string id, deque<parameter*> p, size_t j)
+int Relation::isThereAnother(string id, deque<parameter*> p, int j)
 {
-	size_t duplicateIndex = -1;
+	int duplicateIndex = -1;
 
 	if (j + 1 < p.size())
 	{
-		for (size_t i = j + 1; i < p.size(); i++)
+		for (int i = j + 1; i < p.size(); i++)
 		{
 			if (duplicateIndex == -1)
 			{
 				if (p.at(i)->type() == 1)
 				{
-					duplicateIndex = i;
-					break;
+					if (p.at(i)->name == id)
+					{
+						duplicateIndex = i;
+						break;
+					}
 				}
 			}
 		}
@@ -267,26 +263,11 @@ size_t Relation::isThereAnother(string id, deque<parameter*> p, size_t j)
 	{
 		duplicateIndex = -1;
 	}
-
 	return duplicateIndex;
 }
 
-std::string Relation::toString()
-{
-	stringstream out;
-	set<Tuple>::iterator it;
-	vector<string> myAttributes = scheme.getMyAttributes();
-	vector<size_t> varIndex;
-	for (it = myTuples.begin(); it != myTuples.end(); it++)
-	{
-		Tuple temp;
-		temp = *it;
-		out << temp.toString(myAttributes, varIndex) << endl;
-	}
-	return out.str();
-}
 
-void Relation::printRelation(size_t i, ofstream& out, vector<size_t>& varIndex)
+string Relation::printRelation(int i, stringstream& out, vector<int>& varIndex)
 {
 	set<Tuple>::iterator it;
 	vector<string> myAttributes = scheme.getMyAttributes();
@@ -299,12 +280,11 @@ void Relation::printRelation(size_t i, ofstream& out, vector<size_t>& varIndex)
 	{
 		out << "Yes(" << myTuples.size() << ")" << endl;
 	}
-
 	for (it = myTuples.begin(); it != myTuples.end(); it++)
 	{
 		Tuple temp;
 		temp = *it;
-
-		temp.printTuple(out, myAttributes, varIndex);
+		out << temp.toString(myAttributes, varIndex);
 	}
+	return out.str();
 }
