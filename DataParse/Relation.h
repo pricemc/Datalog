@@ -39,7 +39,11 @@ public:
 
 	void setName(vector<predicate*>&, int);
 
+	void setName(deque<predicate*>&, int);
+
 	Relation evalParams(vector<predicate*>&, int, Relation);
+
+	Relation evalParams(deque<predicate*>&, int, Relation);
 	void evalParamID(Relation&, Relation&, int&, int&, int&,
 		vector<string>&, vector<int>&, bool);
 	void thereIsADuplicate(Relation&, Relation&, int&, int&, int&,
@@ -49,7 +53,8 @@ public:
 
 	string printRelation(int, stringstream& out, vector<int>&);
 
-	Relation project(vector<parameter>&);
+	Relation project(vector<parameter*>&);
+	Relation project(deque<parameter*>&);
 
 	Relation unionWith(Relation);
 

@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 {
 	//Usage Requirements
 	FileReader input;
-	std::string test = "Schemes: people(x,y) employer(x,z) sk(i,z) i(i,z) j(z,i) Facts: j('x', 'y'). sk('x', 'y'). employer('joe','y'). employer('joe','x'). people('joe','bob'). people('jim','bob'). people('joe','jim'). employer('ralph','howard'). people('bob','bob'). Rules: employer(X,Y):- people(Y,X). employer(X,Y):- people(X,Z),employer(Z,Y). people(X,Y):- people(Y,X). Queries: people('joe','jim')? people( who, 'bob')? people('joe', anyone)? people(X,X)? people(X,Y)? employer('ralph', X)? employer('bob','bob')? employer(X,Y)?";
+	std::string test = "Schemes: A(a) B(b) DeaUoo(a,b,c,d,e) DeaVoo(a,b,c,d,e) DeaWoo(a,b,c,d,e) Facts: A('a'). B('b'). DeaWoo('a','a','a','a','b'). DeaWoo('a','b','a','a','b'). Rules: DeaWoo(A,B,C,D,E):-A(A),A(B),A(C),A(D),A(E). DeaWoo(A,B,C,D,E):-A(A),A(B),B(C),A(D),A(E). DeaWoo(A,B,C,D,E):-A(E),B(D),A(C),B(B),A(A). DeaUoo(E,D,C,B,A):-DeaWoo(A,B,C,D,E),A(B). DeaVoo(E,D,C,B,A):-DeaUoo(A,B,C,D,E),B(D). Queries: DeaUoo(A,B,C,D,E)? DeaUoo(A,B,'a',D,E)? DeaVoo(A,B,'a',D,E)? DeaUoo(A,B,'b',D,E)? DeaWoo(A,B,'a',D,Applestrudle)? DeaWoo(A,B,'a',D,E)? DeaWoo('a','a','a','a','b')?";
 	if (argc != 2)
 	{
 		//use test data
@@ -32,7 +32,8 @@ int main(int argc, char *argv[])
 
 	Database db;
 	db.fill(output.second);
-	int j = 0; 
+	cout << db.printResults();
+	/*int j = 0; 
 	stringstream dd;
 	vector<int> varIndex;
 	varIndex.push_back(1);
@@ -56,7 +57,7 @@ int main(int argc, char *argv[])
 		dd.str("");
 		x++;
 	}
-	cout << "PASS\n\n";
+	cout << "PASS\n\n";*/
 	system("pause");
 	return 0;
 }

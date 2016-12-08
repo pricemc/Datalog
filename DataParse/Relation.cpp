@@ -87,6 +87,45 @@ Relation Relation::project(vector<int>& myIndicies)
 	return r;
 }
 
+int Relation::getNumTuples()
+{
+	int size = 0;
+	set<Tuple>::iterator it;
+
+	for (it = myTuples.begin(); it != myTuples.end(); it++)
+	{
+		Tuple temp;
+		temp = *it;
+
+		size += temp.size();
+	}
+
+	return size;
+}
+
+Relation Relation::project(deque<parameter*>& paramList)
+{
+	Relation r;
+	r.name = name;
+	r.scheme = scheme;
+	vector<int> myIndicies;
+
+	for (size_t i = 0; i < paramList.size(); i++)
+	{
+		for (size_t j = 0; j < scheme.myAttributes.size(); j++)
+		{
+			if (paramList.at(i)->name == scheme.myAttributes.at(j))
+			{
+				myIndicies.push_back(j);
+			}
+		}
+	}
+
+	r = project(myIndicies);
+	return r;
+}
+
+
 void Relation::rename(string s, int j)
 {
 	scheme.myAttributes.at(j) = s;
@@ -131,6 +170,19 @@ void Relation::setName(vector<predicate*>& q, int i)
 	name = myQueries.at(index)->id.name;
 }
 
+void Relation::setName(deque<predicate*>& q, int i)
+{
+	vector<predicate*> qnew;
+	for (int x = 0; x < q.size(); x++)
+	{
+		qnew.push_back(q[x]);
+	}
+	myQueries = qnew;
+	int index = i;
+
+	name = myQueries.at(index)->id.name;
+}
+
 Relation Relation::evalParams(vector<predicate*>& q, int i, Relation source)
 {
 	int index = i;
@@ -167,6 +219,57 @@ Relation Relation::evalParams(vector<predicate*>& q, int i, Relation source)
 		}
 	}//done evaluating a query
 	
+	if (toProject.size() > 0)
+	{
+		if (two.name == "") {
+			three = source.project(toProject);
+		}
+		else {
+			three = two.project(toProject);
+		}
+		return three;
+	}
+	else {
+		return two;
+	}
+}
+
+Relation Relation::evalParams(deque<predicate*>& q, int i, Relation source)
+{
+	int index = i;
+	int j = 0;
+	Relation two, three;
+	vector<int> toProject;
+	vector<int> duplicateParams;
+	vector<string> ids;
+	int duplicateIndex;
+	vector<string> alreadyProjected;
+	bool toAdd;
+
+	while (j < myQueries.at(index)->params.size())
+	{
+		toAdd = true;
+
+		if (myQueries.at(index)->params.at(j)->type() == 0)
+		{
+			if (two.name == "") //if relation two hasn't been edited use the source
+			{
+				two = source.select(j, myQueries.at(index)->params.at(j)->name);
+				j++;
+			}
+			else //relation two has been edited so continue to edit it
+			{
+				two = two.select(j, myQueries.at(index)->params.at(j)->name);
+
+				j++;
+			}
+		}
+		else //type == ID so project?
+		{
+			evalParamID(source, two, index, j, duplicateIndex, alreadyProjected, toProject, toAdd);
+		}
+	}//done evaluating a query
+
 	if (toProject.size() > 0)
 	{
 		if (two.name == "") {
