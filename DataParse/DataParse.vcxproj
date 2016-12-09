@@ -74,6 +74,7 @@
     <ClCompile Include="expression.cpp" />
     <ClCompile Include="Facts.cpp" />
     <ClCompile Include="FileReader.cpp" />
+    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Id.cpp" />
     <ClCompile Include="Left_paren.cpp" />
     <ClCompile Include="Multiply.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="expression.h" />
     <ClInclude Include="Facts.h" />
     <ClInclude Include="FileReader.h" />
+    <ClInclude Include="Graph.h" />
     <ClInclude Include="Id.h" />
     <ClInclude Include="Left_paren.h" />
     <ClInclude Include="Multiply.h" />

@@ -8,13 +8,14 @@
 #include "Parser.h"
 #include "Relation.h"
 #include "Database.h"
+#include "Graph.h"
 
 
 int main(int argc, char *argv[])
 {
 	//Usage Requirements
 	FileReader input;
-	std::string test = "Schemes: A(a) B(b) DeaUoo(a,b,c,d,e) DeaVoo(a,b,c,d,e) DeaWoo(a,b,c,d,e) Facts: A('a'). B('b'). DeaWoo('a','a','a','a','b'). DeaWoo('a','b','a','a','b'). Rules: DeaWoo(A,B,C,D,E):-A(A),A(B),A(C),A(D),A(E). DeaWoo(A,B,C,D,E):-A(A),A(B),B(C),A(D),A(E). DeaWoo(A,B,C,D,E):-A(E),B(D),A(C),B(B),A(A). DeaUoo(E,D,C,B,A):-DeaWoo(A,B,C,D,E),A(B). DeaVoo(E,D,C,B,A):-DeaUoo(A,B,C,D,E),B(D). Queries: DeaUoo(A,B,C,D,E)? DeaUoo(A,B,'a',D,E)? DeaVoo(A,B,'a',D,E)? DeaUoo(A,B,'b',D,E)? DeaWoo(A,B,'a',D,Applestrudle)? DeaWoo(A,B,'a',D,E)? DeaWoo('a','a','a','a','b')?";
+	std::string test = "Schemes: A(a,b) rA(a,b) Reflexive(a,b) colB(b) Symmetric(a,b) Transitive(a,b) SymTran(a,b) Facts: A('1','2'). A('2','3'). A('3','4'). A('4','5'). A('5','6'). A('6','7'). A('7','8'). A('8','9'). A('9','10'). Rules: Symmetric(X,Y) :- A(X,Y). Symmetric(X,Y) :- Symmetric(Y,X). rA(a,b) :- A(b,a). Reflexive(X,Y) :- A(X,Z),rA(Z,Y). Transitive(X,Y) :- A(X,Y). Transitive(X,Z) :- Transitive(X,Y),Transitive(Y,Z). SymTran(X,Y) :- SymTran(Y,X). SymTran(X,Z) :- SymTran(X,Y),SymTran(Y,Z). SymTran(X,Y) :- A(Y,X). Queries: Symmetric(Q,R)? Reflexive(Q,R)? Transitive('1',P)? A('1','2')? Symmetric('2','1')? SymTran(X,Y)?";
 	if (argc != 2)
 	{
 		//use test data
@@ -30,9 +31,27 @@ int main(int argc, char *argv[])
 	Parser* parser = new Parser();
 	std::pair<bool, datalogProgram> output = parser->parse(tokens);
 
+
+	Graph graph;
+	graph.createGraph(output.second.rules);
+	cout << graph.printGraph();
+	cout << "PASS\n\n";
+
+	/*string current = "";
+	for (int i = 0; i < output.second.rules.size(); i++)
+	{
+		current = "R" + i;
+		graph.depthFirst(current);
+	}*/
+
+	graph.graph = graph.reverseEdges();
+	cout << "Reverse:\n" << graph.printGraph();
+
+
 	Database db;
 	db.fill(output.second);
-	cout << db.printResults();
+	db.printResults();
+	//cout << db.printResults();
 	/*int j = 0; 
 	stringstream dd;
 	vector<int> varIndex;

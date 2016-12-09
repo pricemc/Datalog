@@ -269,6 +269,36 @@ void Database::evalRules(vector<rule*>& rules)
 	}
 }
 
+string Database::printRules()
+{
+	stringstream out;
+	for (size_t i = 0; i < rules.size(); i++)
+	{
+		out << rules.at(i)->toString();
+
+		/*for (size_t j = 0; j < rules.at(i)->paramList.size(); j++)
+		{
+			out << myQueries.at(i).paramList.at(j).toString();
+
+			if (j < (myQueries.at(i).paramList.size() - 1))
+			{
+				out << ",";
+			}
+		}
+		out << ")? " << endl;
+		out << endl;*/
+
+		string currQ = "R" + graph.convertInt(i + 1);
+		graph.depthFirst(currQ);
+
+		cout << graph.printPostNums();
+		cout << graph.printRuleOrder(currQ);
+		cout << graph.printBackwardEdges();
+		graph.reset();
+	}
+	return out.str();
+}
+
 void Database::evalRulesNewFacts(Relation& one, Relation& two, Relation& three,
 	Relation& projected, Relation& unioned, Relation& toUnion, size_t i) {
 

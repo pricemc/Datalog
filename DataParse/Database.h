@@ -9,6 +9,7 @@
 #include "rule.h"
 #include "predicate.h"
 #include "datalogProgram.h"
+#include "Graph.h"
 
 using namespace std;
 
@@ -27,7 +28,7 @@ public:
 	vector<predicate*> queries;
 	vector<rule*> rules;
 	int numPass;
-
+	Graph graph;
 
 	void addRelation(Relation);
 
@@ -55,4 +56,6 @@ public:
 	void removeDupSchemes(Relation&, vector<size_t>&);
 
 	bool contains(string&, vector<string>&);
+
+	string printRules();
 };
