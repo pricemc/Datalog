@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 
 	Database db;
 	db.fill(output.second);
-	db.printResults();
+	cout << db.printResults();
 	//cout << db.printResults();
 	/*int j = 0; 
 	stringstream dd;
@@ -77,6 +77,5 @@ int main(int argc, char *argv[])
 		x++;
 	}
 	cout << "PASS\n\n";*/
-	system("pause");
 	return 0;
 }
