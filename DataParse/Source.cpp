@@ -58,6 +58,5 @@ int main(int argc, char *argv[])
 		x++;
 	}
 	cout << "PASS\n\n";*/
-	system("pause");
 	return 0;
 }
