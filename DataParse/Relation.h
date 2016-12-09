@@ -46,6 +46,7 @@ public:
 		vector<string>&, vector<int>&, bool);
 
 	int isThereAnother(string, deque<parameter*>, int);
+	string toString();
 
 	string printRelation(int, stringstream& out, vector<int>&);
 

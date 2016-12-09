@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 {
 	//Usage Requirements
 	FileReader input;
-	std::string test = "Schemes:  	dc(D,C) Facts: 	dc('ralph','howard'). Rules:  Queries: 	dc('ralph', X)? 	dc('bob','bob')? 	dc(X,Y)?";
+	std::string test = "Schemes: SK(A,B) Facts: SK('a','c'). SK('b','c'). SK('b','b'). SK('b','c'). Rules: DoNothing(Z) :- Stuff(Z). Queries: SK(A,'c')? SK('b','c')? SK(X,X)? SK(A,B)?";
 	if (argc != 2)
 	{
 		//use test data
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	Parser* parser = new Parser();
 	std::pair<bool, datalogProgram> output = parser->parse(tokens);
 
-	Database db;
+	/*Database db;
 	db.fill(output.second);
 	int j = 0; 
 	stringstream dd;
@@ -54,15 +54,15 @@ int main(int argc, char *argv[])
 	for (int i = 0; i < tokens.size(); i++) delete tokens[i];
 	delete parser;
 	std::cout << output.second.toString();
-
+	*/
 	if (!output.first) return 0;
-
+	
 	//Relational Database
 	vector<predicate*> schemes = output.second.schemes;
 	vector<predicate*> facts = output.second.facts;
 	vector<predicate*> queries = output.second.queries;
 	set<parameter*> domain = output.second.domain;
-
+	
 	Relation r;
 
 	int i = 0;
@@ -106,13 +106,12 @@ int main(int argc, char *argv[])
 	}
 	z.clear();
 	cout << "PASS\n";
-
-	std::cout << "Rename x = y :\n" << r.rename("y", 0).toString();
-
-	std::cout << "Rename y = old :\n" << r.rename("old", 1).toString();
+	r.rename("y", 0);
+	std::cout << "Rename x = y :\n" << r.toString();
+	r.rename("old", 1);
+	std::cout << "Rename y = old :\n" << r.toString();
 	z.clear();
-	cout << "PASS\n";*/
-
+	cout << "PASS\n";
 
 	return 0;
 }

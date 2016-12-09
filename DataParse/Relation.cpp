@@ -288,3 +288,18 @@ string Relation::printRelation(int i, stringstream& out, vector<int>& varIndex)
 	}
 	return out.str();
 }
+
+std::string Relation::toString()
+ {
+	stringstream out;
+	set<Tuple>::iterator it;
+	vector<string> myAttributes = scheme.getMyAttributes();
+	vector<int> varIndex;
+	for (it = myTuples.begin(); it != myTuples.end(); it++)
+	{
+		Tuple temp;
+		temp = *it;
+		out << temp.toString(myAttributes, varIndex) << endl;
+	}
+	return out.str();
+}

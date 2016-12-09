@@ -14,7 +14,7 @@ Tuple::~Tuple() {
 std::string Tuple::toString(vector<string>& myAttributes, vector<int>& varIndex)
 {
 	stringstream output;
-	if (varIndex.size() > 0)
+	//if (varIndex.size() > 0)
 	{
 		for (int i = 0; i < size(); i++)
 		{
