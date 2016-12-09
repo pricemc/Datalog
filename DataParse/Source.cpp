@@ -40,6 +40,5 @@ int main(int argc, char *argv[])
 	for (int i = 0; i < tokens.size(); i++) delete tokens[i];
 	delete parser;
 	std::cout << output.second.toString();
-	system("pause");
 	return 0;
 }
